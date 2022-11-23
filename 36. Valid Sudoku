@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool isValid(int row, int col, vector<vector<char>> &board) {
+        char cur = board[row][col];
+        
+        for (int i=0; i<9; i++) {
+            if (board[i][col] == cur && i!=row) {
+                return false;
+            } 
+        }
+        for (int j=0; j<9; j++) {
+            if (board[row][j] == cur && j!=col) {
+                return false;
+            }
+        }
+        
+        int di, dj;
+        if (row < 3) di = 0;
+        else if (row < 6) di = 3;
+        else di = 6;
+        if (col < 3) dj = 0;
+        else if (col < 6) dj = 3;
+        else dj = 6;
+        for (int i=0; i<3; i++) {
+            for (int j=0; j<3; j++) {
+                if (board[i+di][j+dj] == cur && (i+di)!=row && (j+dj)!=col) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    bool isValidSudoku(vector<vector<char>>& board) {
+        for (int i=0; i<9; i++) {
+            for (int j=0; j<9; j++) {
+                if (board[i][j] == '.') continue;
+                if (!isValid(i, j, board)) return false;
+            }
+        }
+        return true;
+    }
+};
+//November 23, 2022
