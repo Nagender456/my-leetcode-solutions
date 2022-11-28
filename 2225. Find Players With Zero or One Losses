@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        vector<int> wins(100010, 0);
+        vector<int> lost(100010, 0);
+        for (auto el: matches) {
+            wins[el[0]]++;
+            lost[el[1]]++;
+        }
+        set<int> s0;
+        set<int> s1;
+        for (int i=0; i<100010; i++) {
+            if (wins[i]>0 && lost[i]==0) {
+                s0.insert(i);
+            }
+            else if (lost[i]==1) {
+                s1.insert(i);
+            }
+        }
+        vector<vector<int>> ans;
+        ans.push_back(vector<int>(s0.begin(), s0.end()));
+        ans.push_back(vector<int>(s1.begin(), s1.end()));
+        return ans;
+    }
+};
+// November 28, 2022
