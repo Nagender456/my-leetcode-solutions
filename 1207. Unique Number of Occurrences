@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        vector<int> count(2010, 0);
+        vector<int> seen(1000, false);
+        for (auto el: arr) {
+            count[el+1000]++;
+        }
+        for (auto el: count) {
+            if (el == 0) continue;
+            if (seen[el]) return false;
+            seen[el] = true;
+        }
+        return true;
+    }
+};
+// November 30, 2022
