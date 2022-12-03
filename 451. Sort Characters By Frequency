@@ -1,0 +1,21 @@
+class Solution {
+public:
+    string frequencySort(string s) {
+        map<char, int> tempM;
+        map<int, vector<char>> m;
+        for (int i=0; i<s.length(); i++) {
+            tempM[s[i]]++;
+        }
+        for (auto el: tempM) {
+            m[el.second].push_back(el.first);
+        }
+        string ans = "";
+        for (auto el: m) {
+            for (auto el2: el.second) {
+                ans = string(el.first, el2) + ans;
+            }
+        }
+        return ans;
+    }
+};
+// December 3, 2022
