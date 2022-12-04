@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minimumAverageDifference(vector<int>& nums) {
+        long long N = nums.size();
+        vector<long long> preSum(N);
+        preSum[0] = nums[0];
+        for (long long i=1; i<N; i++) {
+            preSum[i] = preSum[i-1] + nums[i];
+        }
+        long long minNum = 100010;
+        long long ans = -1;
+        for (long long i=0; i<N; i++) {
+            long long n1 = i+1;
+            long long n2 = N - n1;
+            long long curNum;
+            if (n2 > 0) curNum = abs(preSum[i]/n1 - (preSum[N-1] - preSum[i])/n2);
+            else curNum = preSum[i]/n1;
+            if (curNum < minNum) {
+                ans = i;
+                minNum = curNum;
+            }
+        }
+        return (int)ans;
+    }
+};
+// December 4, 2022
