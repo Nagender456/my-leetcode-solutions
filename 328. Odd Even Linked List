@@ -1,0 +1,24 @@
+class Solution {
+public:
+    ListNode* lastOdd;
+    ListNode* lastEven;
+    ListNode* firstEven;
+    void helper(ListNode* node) {
+        if (node == nullptr) return;
+        this->lastOdd->next = node;
+        this->lastEven->next = node->next;
+        node->next = this->firstEven;
+        this->lastOdd = node;
+        this->lastEven = this->lastEven->next;
+        if (this->lastEven != nullptr) helper(this->lastEven->next);
+    }
+    ListNode* oddEvenList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr || head->next->next == nullptr) return head;
+        this->lastOdd = head;
+        this->lastEven = head->next;
+        this->firstEven = head->next;
+        helper(head->next->next);
+        return head;
+    }
+};
+// December 6, 2022
