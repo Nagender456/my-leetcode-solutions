@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int ans, low, high;
+    void traverse(TreeNode* node) {
+        if (node == nullptr) return;
+        if (node->val < this->high) {
+            traverse(node->right);
+        }
+        if (node->val > this->low) {
+            traverse(node->left);
+        }
+        if (node->val <= high && node->val >= low) {
+            this->ans += node->val;
+        }
+    }
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        this->ans = 0;
+        this->low = low;
+        this->high = high;
+        traverse(root);
+        return this->ans;
+    }
+};
+// December 7, 2022
