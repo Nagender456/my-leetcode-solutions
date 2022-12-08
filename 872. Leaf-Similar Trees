@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> leaf1;
+    vector<int> leaf2;
+    void traverse(TreeNode* node, vector<int> &leafVector) {
+        if (node->left == nullptr && node->right == nullptr) {
+            leafVector.push_back(node->val);
+            return;
+        }
+        if (node->left != nullptr) {
+            traverse(node->left, leafVector);
+        }
+        if (node->right != nullptr) {
+            traverse(node->right, leafVector);
+        }
+    }
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        traverse(root1, leaf1);
+        traverse(root2, leaf2);
+        if (leaf1.size() != leaf2.size()) return false;
+        for (int i=0; i<leaf1.size(); i++) {
+            if (leaf1[i] != leaf2[i]) return false;
+        }
+        return true;
+    }
+};
+// December 8, 2022
