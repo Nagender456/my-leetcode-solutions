@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int ans;
+    void traverse(TreeNode* node, int minVal, int maxVal) {
+        if (node == nullptr) return;
+        if (abs(node->val - minVal) > ans) ans = abs(node->val - minVal);
+        if (abs(node->val - maxVal) > ans) ans = abs(node->val - maxVal);
+        int newMin = min(minVal, node->val);
+        int newMax = max(maxVal, node->val);
+        traverse(node->left, newMin, newMax);
+        traverse(node->right, newMin, newMax);
+    }
+    int maxAncestorDiff(TreeNode* root) {
+        this->ans = 0;
+        traverse(root->left, root->val, root->val);
+        traverse(root->right, root->val, root->val);
+        return this->ans;
+    }
+};
+// December 9, 2022
