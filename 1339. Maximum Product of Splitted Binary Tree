@@ -1,0 +1,22 @@
+class Solution {
+public:
+    unsigned long long totSum;
+    vector<unsigned long long> subTreeSums;
+    unsigned long long findSum(TreeNode* node) {
+        if (node == nullptr) return 0;
+        unsigned long long curSum = node->val + findSum(node->left) + findSum(node->right);
+        subTreeSums.push_back(curSum);
+        return curSum;
+    }
+
+    int maxProduct(TreeNode* root) {
+        this->totSum = findSum(root);
+        unsigned long long ans = 0;
+        for (auto el: subTreeSums) {
+            ans = max(ans, (el * (this->totSum - el)));
+        }
+        return ans % 1000000007;
+    }
+
+};
+// December 10, 2022
