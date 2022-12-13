@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int size;
+    vector<vector<int>> dp;
+    int findSolution(int row, int col, vector<vector<int>>& matrix) {
+        if (row >= this->size) return 0;
+        if (this->dp[row][col] == -1) {
+            int curAns = INT_MAX;
+            for (int d=-1; d<=1; d++) {
+                int newCol = col + d;
+                if (newCol < 0 || newCol >= this->size) continue;
+                curAns = min(curAns, findSolution(row+1, newCol, matrix));
+            }
+            this->dp[row][col] = curAns + matrix[row][col];
+        }
+        return this->dp[row][col];
+    }
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        this->size = matrix.size();
+        this->dp = vector<vector<int>>(this->size, vector<int>(this->size, -1));
+        for (int j=0; j<this->size; j++) {
+            this->dp[this->size-1][j] = matrix[this->size-1][j];
+        }
+        int ans = INT_MAX;
+        for (int j=0; j<this->size; j++) {
+            ans = min(ans, findSolution(0, j, matrix));
+        }
+        return ans;
+    }
+};
+// December 13, 2022
