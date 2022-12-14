@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int N;
+    vector<int> dp;
+    int findSolution(int i, vector<int>& nums) {
+        if (i >= this->N) return 0;
+        if (this->dp[i] == -1) {
+            int ans1 = findSolution(i+1, nums);
+            int ans2 = nums[i] + findSolution(i+2, nums);
+            this->dp[i] = max(ans1, ans2);
+        }
+        return this->dp[i];
+    }
+    int rob(vector<int>& nums) {
+        this->N = nums.size();
+        this->dp = vector<int>(N, -1);
+        this->dp[N-1] = nums[N-1];
+        return findSolution(0, nums);
+    }
+};
+// December 14, 2022
