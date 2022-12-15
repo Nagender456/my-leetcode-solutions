@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> dp;
+    int size1, size2;
+    int solve(int i, int j, string &text1, string &text2) {
+        if (i >= this->size1 || j >= this->size2) return 0;
+        if (this->dp[i][j] == -1) {
+            int curAns = INT_MIN;
+            if (text1[i] == text2[j]) {
+                curAns = solve(i+1, j+1, text1, text2) + 1;
+            }
+            curAns = max(curAns, solve(i+1, j, text1, text2));
+            curAns = max(curAns, solve(i, j+1, text1, text2));
+            this->dp[i][j] = curAns;
+        }
+        return this->dp[i][j];
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+        this->size1 = text1.length();
+        this->size2 = text2.length();
+        this->dp = vector<vector<int>>(this->size1, vector<int>(this->size2, -1));
+        return solve(0, 0, text1, text2);
+    }
+};
+// December 15, 2022
