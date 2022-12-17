@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<long long> s;
+        for (auto token: tokens) {
+            if (token == "+") {
+                long long b = s.top(); s.pop();
+                long long a = s.top(); s.pop();
+                long long c = a + b;
+                s.push(c);
+            }
+            else if (token == "-") {
+                long long b = s.top(); s.pop();
+                long long a = s.top(); s.pop();
+                long long c = a - b;
+                s.push(c);
+            }
+            else if (token == "*") {
+                long long b = s.top(); s.pop();
+                long long a = s.top(); s.pop();
+                long long c = a * b;
+                s.push(c);
+            }
+            else if (token == "/") {
+                long long b = s.top(); s.pop();
+                long long a = s.top(); s.pop();
+                long long c = a / b;
+                s.push(c);
+            }
+            else {
+                s.push(stoi(token));
+            }
+        }
+        return s.top();
+    }
+};
+// December 17, 2022
