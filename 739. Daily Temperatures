@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        int N = temperatures.size();
+        stack<pair<int, int>> s;
+        vector<int> ans(N, 0);
+        for (int i=N-1; i>=0; i--) {
+            int &temp = temperatures[i];
+            while (!s.empty() && s.top().second <= temp) {
+                s.pop();
+            }
+            if (!s.empty()) {
+                ans[i] = s.top().first - i;
+            }
+            s.push({i, temp});
+        }
+        return ans;
+    }
+};
+// December 18, 2022
