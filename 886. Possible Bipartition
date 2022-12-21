@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
+        map<int, vector<int>> hating;
+        vector<int> grouped(n+1, 0);
+        vector<bool> visited(n+1, false);
+        stack<pair<int, int>> toVisit;
+        for (auto dislike: dislikes) {
+            hating[dislike[0]].push_back(dislike[1]);
+            hating[dislike[1]].push_back(dislike[0]);
+        }
+        grouped[1] = 1;
+        toVisit.push({1, 1});
+        visited[1] = true;
+        while (!toVisit.empty()) {
+            int person = toVisit.top().first;
+            int grp = toVisit.top().second;
+            toVisit.pop();
+            int newGrp = grp==1? 2: 1;
+            for (auto hater: hating[person]) {
+                if (grouped[hater] == 0) {
+                    grouped[hater] = newGrp;
+                    toVisit.push({hater, newGrp});
+                    visited[hater] = true;
+                }
+                else if (grouped[hater] == grp) {
+                    return false;
+                }
+            }
+            if (toVisit.empty()) {
+                for (int i=1; i<=n; i++) {
+                    if (!visited[i]) {
+                        toVisit.push({i, 1});
+                        visited[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+};
+// December 21, 2022
