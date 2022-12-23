@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int N;
+    int doSelling(int index, int cost, vector<int>& buyDp, vector<int>& sellDp, vector<int>& prices) {
+        if (index >= this->N) {
+            return 0;
+        }
+        if (sellDp[index] == -1) {
+            int maxProfit = 0;
+            for (int i=index; i<this->N; i++) {
+                maxProfit = max(maxProfit, (prices[i] - cost) + doBuying(i+2, buyDp, sellDp, prices));
+            }
+            sellDp[index] = maxProfit;
+        }
+        return sellDp[index];
+    }
+    int doBuying(int index, vector<int>& buyDp, vector<int>& sellDp, vector<int>& prices) {
+        if (index >= this->N) {
+            return 0;
+        }
+        if (buyDp[index] == -1) {
+            int maxProfit = 0;
+            for (int i=index; i<this->N; i++) {
+                maxProfit = max(maxProfit, doSelling(i+1, prices[i], buyDp, sellDp, prices));
+            }
+            buyDp[index] = maxProfit;
+        }
+        return buyDp[index];
+    }
+    int maxProfit(vector<int>& prices) {
+        this->N = prices.size();
+        int maxAns = 0;
+        vector<int> buyDp(N, -1);
+        vector<int> sellDp(N, -1);
+        return doBuying(0, buyDp, sellDp, prices);
+    }
+};
+// December 23, 2022
