@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int n;
+    int mod;
+    vector<vector<int>> dp;
+    int fillTile(int index, int curFilled) {
+        if (index > this->n) return 0;
+        if (index == this->n && curFilled == 0) return 1;
+        if (this->dp[index][curFilled] == -1) {
+            int curAns = 0;
+            if (curFilled == 0) {
+                curAns = (curAns + fillTile(index+1, 0)) % this->mod;
+                curAns = (curAns + fillTile(index+2, 0)) % this->mod;
+                curAns = (curAns + fillTile(index+1, 1)) % this->mod;
+                curAns = (curAns + fillTile(index+1, 2)) % this->mod;
+            }
+            else if (curFilled == 1) {
+                curAns = (curAns + fillTile(index+2, 0)) % this->mod;
+                curAns = (curAns + fillTile(index+1, 2)) % this->mod;
+            }
+            else {
+                curAns = (curAns + fillTile(index+2, 0)) % this->mod;
+                curAns = (curAns + fillTile(index+1, 1)) % this->mod;
+            }
+            this->dp[index][curFilled] = curAns;
+        }
+        return this->dp[index][curFilled];
+    }
+    int numTilings(int n) {
+        this->mod = 1000000007;
+        this->dp = vector<vector<int>>(n+1, vector<int>(3, -1));
+        this->n = n;
+        return fillTile(0, 0);
+    }
+};
+// December 24, 2022
