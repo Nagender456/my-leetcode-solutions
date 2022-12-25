@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
+        sort(nums.begin(), nums.end());
+        int N = nums.size();
+        vector<long long> preSum(N, 0);
+        preSum[0] = nums[0];
+        for (int i=1; i<N; i++) {
+            preSum[i] = preSum[i-1] + nums[i];
+        }
+        vector<int> ansVector;
+        for (auto &query: queries) {
+            auto it = lower_bound(preSum.begin(), preSum.end(), query);
+            int ans = it - preSum.begin();
+            if (ans >= N) {
+                ansVector.push_back(N);
+                continue;
+            }
+            if (*it == query) {
+                ans += 1;
+            }
+            ansVector.push_back(ans);
+        }
+        return ansVector;
+    }
+};
+// December 25, 2022: Merry Christmas
