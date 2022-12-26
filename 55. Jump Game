@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int N;
+    bool solve(int i, vector<int>& nums, vector<bool>& dp) {
+        if (i == this->N-1) return true;
+        if (!dp[i]) return false;
+        for (int di=1; di<=nums[i]; di++) {
+            if (solve(i+di, nums, dp)) return true;
+        }
+        dp[i] = false;
+        return false;
+    }
+    bool canJump(vector<int>& nums) {
+        this->N = nums.size();
+        vector<bool> dp = vector<bool>(N, true);
+        return solve(0, nums, dp);
+    }
+};
+// December 26, 2022
