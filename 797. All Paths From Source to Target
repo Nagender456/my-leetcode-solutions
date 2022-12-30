@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> ans;
+    int N;
+    void traverse(int i, vector<int>& curPath, vector<vector<int>>& graph) {
+        if (i == this->N-1) {
+            this->ans.push_back(curPath);
+            return;
+        }
+        for (auto el: graph[i]) {
+            curPath.push_back(el);
+            traverse(el, curPath, graph);
+            curPath.pop_back();
+        }
+    }
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        this->N = graph.size();
+        vector<int> path = {0};
+        traverse(0, path, graph);
+        return this->ans;
+    }
+};
+// December 30, 2022
