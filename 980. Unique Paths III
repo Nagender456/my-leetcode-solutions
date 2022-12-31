@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int emptyCells;
+    vector<vector<int>> diff;
+    int m, n, ans;
+    void visit(int i, int j, int visitCount, vector<vector<bool>>& visited, vector<vector<int>>& grid) {
+        for (auto &d: diff) {
+            int newI = i+d[0];
+            int newJ = j+d[1];
+            if (newI < 0 || newJ < 0) continue;
+            if (newI >= this->m || newJ >= this->n) continue;
+            if (visited[newI][newJ]) continue;
+            if (grid[newI][newJ] == 0) {
+                visited[newI][newJ] = true;
+                visit(newI, newJ, visitCount+1, visited, grid);
+                visited[newI][newJ] = false;
+            }
+            else if (grid[newI][newJ] == 2 && visitCount == this->emptyCells) {
+                this->ans++;
+            }
+        }
+    }
+    int uniquePathsIII(vector<vector<int>>& grid) {
+        this->m = grid.size();
+        this->n = grid[0].size();
+        this->ans = 0;
+        this->emptyCells = 0;
+        this->diff = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int startI, startJ;
+        vector<vector<bool>> visited(m+1, vector<bool>(n+1, false));
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (grid[i][j] == 0) {
+                    this->emptyCells++;
+                }
+                else if (grid[i][j] == 1) {
+                    startI = i;
+                    startJ = j;
+                }
+            }
+        }
+        visit(startI, startJ, 0, visited, grid);
+        return ans;
+    }
+};
+// December 31, 2022: Good Bye 2022!
