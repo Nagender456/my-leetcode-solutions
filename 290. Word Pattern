@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        s += ' ';
+        vector<string> words;
+        int index = 0;
+        for (int i=0; i<s.length(); i++) {
+            if (s[i] == ' ') {
+                string temp = s.substr(index, i-index);
+                words.push_back(temp);
+                index = i+1;
+            }
+        }
+        if (words.size() != pattern.length()) return false;
+        map<char, string> m;
+        vector<string> seen;
+        int L = words.size();
+        for (int i=0; i<L; i++) {
+            if (m.find(pattern[i]) == m.end()) {
+                if (find(seen.begin(), seen.end(), words[i]) != seen.end()) return false;
+                m[pattern[i]] = words[i];
+            }
+            else {
+                if (m[pattern[i]] != words[i]) return false;
+
+            }
+            seen.push_back(words[i]);
+        }
+        return true;
+    }
+};
+// January 01, 2023: Happy New Year :)
