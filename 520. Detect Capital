@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool detectCapitalUse(string word) {
+        if (word.length() <= 1) return true;
+        int N = word.length();
+        char a = word[0];
+        if (a >= 'a') {
+            for (int i=1; i<N; i++) {
+                if (word[i] <= 'Z') return false;
+            }
+        }
+        else {
+            if (word[1] >= 'a') {
+                for (int i=2; i<N; i++) {
+                    if (word[i] <= 'Z') return false;
+                }
+            }
+            else {
+                for (int i=2; i<N; i++) {
+                    if (word[i] >= 'a') return false;
+                }
+            }
+        }
+        return true;
+    }
+};
+// January 02, 2023
