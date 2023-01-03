@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int minDeletionSize(vector<string>& strs) {
+        int L = strs[0].length();
+        int N = strs.size();
+        int ans = 0;
+        for (int c=0; c<L; c++) {
+            char prev = strs[0][c];
+            for (int i=1; i<N; i++) {
+                if (strs[i][c] < prev) {
+                    ans++;
+                    break;
+                }
+                prev = strs[i][c];
+            }
+        }
+        return ans;
+    }
+};
+// January 03, 2023
