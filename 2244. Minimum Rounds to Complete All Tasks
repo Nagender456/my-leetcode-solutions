@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minimumRounds(vector<int>& tasks) {
+        map<int, int> m;
+        for (auto task: tasks) {
+            m[task]++;
+        }
+        int ans = 0;
+        for (auto el: m) {
+            int n = el.second;
+            if (n <= 1) {
+                return -1;
+            }
+            else if (n <= 3) {
+                ans++;
+            }   
+            else {
+                int rem = n % 3;
+                if (rem == 0) {
+                    ans += n / 3;
+                }
+                else {
+                    ans += (n / 3) + 1;
+                }
+            }
+        } 
+        return ans;
+    }
+};
+// 04 January, 2023
