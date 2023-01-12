@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> ans;
+    vector<int> traverse(int i, int parent, vector<vector<int>>& neighbor, string& labels) {
+        vector<int> temp;
+        vector<int> cur(26, 0);
+        int curChar = labels[i] - 'a';
+        cur[curChar]++;
+        for (auto neigh: neighbor[i]) {
+            if (neigh == parent) continue;
+            temp = traverse(neigh, i, neighbor, labels);
+            for (int i=0; i<26; i++) {
+                cur[i] += temp[i];
+            }
+        }
+        this->ans[i] = cur[curChar];
+        return cur;
+    }
+    vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
+        vector<vector<int>> neighbor(n, vector<int>());
+        this->ans = vector<int>(n, 1);
+        for (auto edge: edges) {
+            neighbor[edge[0]].push_back(edge[1]);
+            neighbor[edge[1]].push_back(edge[0]);
+        }
+        traverse(0, n+1, neighbor, labels);
+        return this->ans;
+    }
+};
+// January 12, 2023
