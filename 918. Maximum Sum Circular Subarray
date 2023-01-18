@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int maxSubarraySumCircular(vector<int>& nums) {
+        int totSum = 0;
+        int maxSum = 0;
+        int minSum = 0;
+        int maxest = INT_MIN;
+        int minest = INT_MAX;
+        for (auto el: nums) {
+            maxSum += el;
+            minSum += el;
+            totSum += el;
+            maxest = max(maxest, maxSum);
+            minest = min(minest, minSum);
+            if (maxSum < 0) {
+                maxSum = 0;
+            }
+            if (minSum > 0) {
+                minSum = 0;
+            }
+        }
+        int ans1 = maxest;
+        int ans2 = totSum - minest;
+        if (ans2 == 0) return ans1;
+        return ans1 > ans2? ans1 : ans2;
+    }
+};
+// January 18, 2023
