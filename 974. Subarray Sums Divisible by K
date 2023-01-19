@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        long long curSum = 0;
+        int N = nums.size();
+        for (int i = 0; i<N; i++) {
+            curSum += nums[i];
+            nums[i] = curSum % k;
+        }
+        for (auto el: nums) {
+            cout << el << ", ";
+        }
+        map<int, int> count;
+        for (auto el: nums) {
+            if (el >= 0) count[el]++;
+            else count[el+k]++;
+        }
+        int ans = 0;
+        for (auto el: count) {
+            ans += (el.second * (el.second - 1))/2;
+        }
+        ans += count[0];
+        return ans;
+    }
+};
+// January 19, 2023
