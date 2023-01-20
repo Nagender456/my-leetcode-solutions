@@ -1,0 +1,26 @@
+class Solution {
+public:
+    set<vector<int>> ans;
+    void solve(int i, int N, vector<int>& nums, vector<int>& cur) {
+        if (i >= N) {
+            if (cur.size() > 1) ans.insert(cur);
+            return;
+        }
+        int last = cur.size() > 0 ? cur[cur.size() - 1] : -200;
+        for (int j=i; j<N; j++) {
+            if (nums[j] >= last) {
+                cur.push_back(nums[j]);
+                if (cur.size() > 1) ans.insert(cur);
+                solve(j+1, N, nums, cur);
+                cur.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        int N = nums.size();
+        vector<int> cur = vector<int>();
+        solve(0, N, nums, cur);
+        return vector(ans.begin(), ans.end());
+    }
+};
+// 20 January, 2023
