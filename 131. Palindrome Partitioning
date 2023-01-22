@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<string>> ans;
+    bool isPalindrome(string s) {
+        int L = s.length();
+        for (int i=0; i<L/2; i++) {
+            if (s[i] != s[L-i-1]) return false;
+        }
+        return true;
+    }
+    void solve(int index, string cur, vector<string> curAns, string s) {
+        if (index >= s.length()) {
+            if (cur.length() == 0) {
+                this->ans.push_back(curAns);
+            }
+            return;
+        }
+        cur += s[index];
+        solve(index+1, cur, curAns, s);
+        if (isPalindrome(cur)) {
+            curAns.push_back(cur);
+            solve(index+1, "", curAns, s);
+        }
+    }
+    vector<vector<string>> partition(string s) {
+        solve(0, "", vector<string>(), s);
+        return this->ans;
+    }
+};
+// January 22, 2023
