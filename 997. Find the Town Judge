@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int findJudge(int n, vector<vector<int>>& trust) {
+        map<int, bool> townJudge;
+        map<int, int> trustCount;
+        for (int i=1; i<n+1; i++) {
+            townJudge[i] = true;
+        }
+        for (auto& el: trust) {
+            townJudge[el[0]] = false;
+            trustCount[el[1]]++;
+        }
+        for (auto& el: townJudge) {
+            if (el.second && trustCount[el.first] >= n-1) {
+                return el.first;
+            }
+        }
+        return -1;
+    }
+};
+// 23 January, 2023
