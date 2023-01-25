@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int closestMeetingNode(vector<int>& edges, int node1, int node2) {
+        int N = edges.size();
+        vector<int> nodeOne(N, INT_MAX);
+        vector<bool> visitedOne(N, false);
+        vector<int> nodeTwo(N, INT_MAX);
+        vector<bool> visitedTwo(N, false);
+        nodeOne[node1] = 0;
+        visitedOne[node1] = true;
+        nodeTwo[node2] = 0;
+        visitedTwo[node2] = true;
+        int cur1 = node1, dist1 = 1;
+        int cur2 = node2, dist2 = 1;
+        while (edges[cur1] != -1 && !visitedOne[edges[cur1]]) {
+            visitedOne[edges[cur1]] = true;
+            nodeOne[edges[cur1]] = dist1;
+            dist1++;
+            cur1 = edges[cur1];
+        }
+        while (edges[cur2] != -1 && !visitedTwo[edges[cur2]]) {
+            visitedTwo[edges[cur2]] = true;
+            nodeTwo[edges[cur2]] = dist2;
+            dist2++;
+            cur2 = edges[cur2];
+        }
+        int minimum = INT_MAX, cur;
+        int ans = -1;
+        for (int i=0; i<N; i++) {
+            cur = max(nodeOne[i], nodeTwo[i]);
+            if (cur < minimum) {
+                minimum = cur;
+                ans = i;
+            }
+        }
+        return ans;
+    }
+};
+// January 25, 2023
