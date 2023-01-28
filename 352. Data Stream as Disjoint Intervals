@@ -1,0 +1,33 @@
+class SummaryRanges {
+public:
+    set<int> cont;
+    vector<vector<int>> ans;
+    SummaryRanges() {
+        
+    }
+    
+    void addNum(int value) {
+        cont.insert(value);
+        set<int>::iterator it = cont.begin();
+    }
+    
+    vector<vector<int>> getIntervals() {
+        this->ans = vector<vector<int>>(0);
+        if (cont.size() == 0) return this->ans;
+        set<int>::iterator it = cont.begin();
+        int start = *it;
+        int prev = *it;
+        it++;
+        for (; it != cont.end(); it++) {
+            if (*it != prev + 1) {
+                this->ans.push_back({start, prev});
+                start = *it;
+            }
+            prev = *it;
+        }
+        this->ans.push_back({start, prev});
+        return this->ans;
+    }
+};
+
+// 28 January, 2023
