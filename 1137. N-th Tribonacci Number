@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int tribonacci(int n) {
+        if (n == 0) return 0;
+        if (n == 1 || n == 2) return 1;
+        n -= 3;
+        int t0 = 0, t1 = 1, t2 = 1, temp;
+        while (n >= 0) {
+            temp = t0 + t1 + t2;
+            t0 = t1;
+            t1 = t2;
+            t2 = temp;
+            n--;
+        }
+        return t2;
+    }
+};
+
+// January 30, 2023
