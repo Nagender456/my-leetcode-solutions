@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool divides(string s1, string s2) {
+        if (s1.length() == 0) return true;
+        int l1 = s1.length(), l2 = s2.length();
+        int i1 = 0, i2 = 0;
+        while (i2 < l2) {
+            if (s1[i1] != s2[i2]) return false;
+            i1++; i2++;
+            if (i1 >= l1) i1 = 0;
+        }
+        if (i1 == 0) return true;
+        return false;
+    }
+    string gcdOfStrings(string str1, string str2) {
+        if (str1 == str2) return str1;
+        if (str1.length() > str2.length()) {
+            string temp = str1;
+            str1 = str2;
+            str2 = temp;
+        }
+        string ans = str1;
+        while (!(divides(ans, str1) && divides(ans, str2))) {
+            ans = ans.substr(0, ans.length()-1);
+        }
+        return ans;
+    }
+};
+
+// 1 February, 2023
