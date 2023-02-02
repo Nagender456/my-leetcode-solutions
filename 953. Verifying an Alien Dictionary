@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool checkOrder(string word1, string word2, map<char, int>& charRank) {
+        int L = min(word1.length(), word2.length());
+        for (int i=0; i<L; i++) {
+            if (charRank[word1[i]] < charRank[word2[i]]) return true;
+            else if (charRank[word1[i]] > charRank[word2[i]]) return false;
+        }
+        if (word1.length() > word2.length()) return false;
+        return true;
+    }
+    bool isAlienSorted(vector<string>& words, string order) {
+        map<char, int> charRank;
+        for (int i=0; i<26; i++) {
+            charRank[order[i]] = i;
+        }
+        int N = words.size();
+        for (int i=0; i<N-1; i++) {
+            if (!checkOrder(words[i], words[i+1], charRank)) return false;
+        }
+        return true;
+    }
+};
+
+// 2 February, 2023
