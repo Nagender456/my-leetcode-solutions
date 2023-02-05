@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int S = s.length(), P = p.length();
+        if (P > S) return vector<int>(0);
+        s += "0";
+        map<char, int> pChar;
+        map<char, int> sChar;
+        for (int i=0; i<P; i++) {
+            pChar[p[i]]++;
+        }
+        for (int i=0; i<P; i++) {
+            sChar[s[i]]++;
+        }
+        vector<int> ans;
+        bool cur;
+        for (int i=P; i<S+1; i++) {
+            cur = true;
+            for (auto el: pChar) {
+                if (sChar[el.first] != el.second) {
+                    cur = false;
+                    break;
+                }
+            }
+            if (cur) ans.push_back(i-P);
+            sChar[s[i]]++;
+            sChar[s[i-P]]--;
+        }
+        return ans;
+    }
+};
+
+// 5 February, 2023
