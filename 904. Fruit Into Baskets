@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        map<int, int> count;
+        int N = fruits.size();
+        int left = 0, right = -1;
+        int cur, curFruitCount = 0;
+        int ans = 0, curAns = 0;
+        while (right < N-1) {
+            right++;
+            cur = fruits[right];
+            count[cur]++;
+            if (count[cur] == 1) {
+                curFruitCount++;
+            }
+            curAns++;
+            while (curFruitCount > 2) {
+                cur = fruits[left];
+                left++;
+                curAns--;
+                count[cur]--;
+                if (count[cur] == 0) {
+                    curFruitCount--;
+                }
+            }
+            ans = max(ans, curAns);
+        }
+        return ans;
+    }
+};
+
+// 7 February, 2023
