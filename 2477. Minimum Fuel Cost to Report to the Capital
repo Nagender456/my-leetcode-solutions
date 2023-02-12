@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int seats;
+    long long ans = 0;
+    vector<bool> visited;
+    map<int, vector<int>> path;
+    long long traverse(int city, int seats) {
+        long long temp = 1;
+        visited[city] = true;
+        for (auto el: path[city]) {
+            if (!visited[el]) {
+                temp += traverse(el, seats+1);
+            }
+        }
+        if (city!=0) this->ans += (temp + this->seats - 1 ) / this->seats;
+        return temp;
+    }
+    long long minimumFuelCost(vector<vector<int>>& roads, int seats) {
+        this->seats = seats;
+        visited = vector<bool>(roads.size() + 1, false);
+        for (auto el: roads) {
+            path[el[0]].push_back(el[1]);
+            path[el[1]].push_back(el[0]);
+        }
+        traverse(0, 0);
+        return this->ans;
+    }
+};
+
+// 12 February, 2023 
