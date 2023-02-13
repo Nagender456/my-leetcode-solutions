@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int countOdds(int low, int high) {
+        int ans = (high - low) / 2 + 1;
+        if (low % 2 == 0 && high % 2 == 0) ans--;
+        return ans;
+    }
+};
+
+// 13 February, 2023
