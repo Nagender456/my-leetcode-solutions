@@ -1,0 +1,50 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        char carry = '0';
+        int i = a.length() - 1, j = b.length() - 1;
+        char A, B;
+        string ans = "";
+        while (i >= 0 || j >= 0) {
+            if (i >= 0) A = a[i];
+            else A = '0'; i--;
+            if (j >= 0) B = b[j];
+            else B = '0'; j--;
+            if (A == B) {
+                if (A == '0') {
+                    if (carry == '1') {
+                        ans = '1' + ans;
+                        carry = '0';
+                    }
+                    else {
+                        ans = '0' + ans; 
+                    }
+                }
+                else {
+                    if (carry == '1') {
+                        ans = '1' + ans;
+                    }
+                    else {
+                        ans = '0' + ans;
+                        carry = '1';
+                    }
+                }
+            }
+            else {
+                if (carry == '1') {
+                    ans = '0' + ans;
+                    carry = '1';
+                }
+                else {
+                    ans = '1' + ans; 
+                }
+            }
+        }
+        if (carry == '1') {
+            ans = '1' + ans;
+        }
+        return ans;
+    }
+};
+
+// 14 February, 2023
