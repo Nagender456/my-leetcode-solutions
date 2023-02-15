@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<int> addToArrayForm(vector<int>& num, int k) {
+        vector<int> num2;
+        int rem, carry = 0, s;
+        while (k > 0) {
+            rem = k % 10;
+            k /= 10;
+            num2.insert(num2.begin(), rem);
+        }
+        while (num.size() < num2.size()) {
+            num.insert(num.begin(), 0);
+        }
+        while (num2.size() < num.size()) {
+            num2.insert(num2.begin(), 0);
+        }
+        int L = num.size();
+        vector<int> ans;
+        for (int i=L-1; i>=0; i--) {
+            s = carry;
+            carry = 0;
+            s += (num[i] + num2[i]);
+            if (s < 10) {
+                ans.insert(ans.begin(), s);
+            }
+            else {
+                carry = s / 10;
+                ans.insert(ans.begin(), s%10);
+            }
+        }
+        if (carry > 0) {
+            ans.insert(ans.begin(), carry);
+        }
+        return ans;
+    }
+};
+
+// 15 February, 2023
