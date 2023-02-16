@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int ans;
+    void dfs(TreeNode* root, int curDepth) {
+        if (root == nullptr) {
+            this->ans = max(this->ans, curDepth);
+            return;
+        }
+        dfs(root->left, curDepth+1);
+        dfs(root->right, curDepth+1);
+    }
+    int maxDepth(TreeNode* root) {
+        this->ans = INT_MIN;
+        dfs(root, 0);
+        return this->ans;
+    }
+};
+
+// 16 February, 2023
