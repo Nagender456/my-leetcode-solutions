@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> nodes;
+    void dfs(TreeNode* root) {
+        if (root == nullptr) return;
+        nodes.push_back(root->val);
+        dfs(root->left);
+        dfs(root->right);
+    }
+    int minDiffInBST(TreeNode* root) {
+        dfs(root);
+        sort(nodes.begin(), nodes.end());
+        int ans = INT_MAX;
+        for (int i=0; i<nodes.size()-1; i++) {
+            ans = min(ans, nodes[i+1]-nodes[i]);
+        }
+        return ans;
+    }
+};
+
+// 17 February, 2023
