@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void preorder(TreeNode* root, int level, vector<vector<int>>& nodesByLevel) {
+        if (root == nullptr) return;
+        if (nodesByLevel.size() <= level) {
+            nodesByLevel.push_back({root->val});
+        }
+        else {
+            nodesByLevel[level].push_back(root->val);
+        }
+        preorder(root->left, level+1, nodesByLevel);
+        preorder(root->right, level+1, nodesByLevel);
+    }
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> nodesByLevel;
+        preorder(root, 0, nodesByLevel);
+        for (int i=1; i<nodesByLevel.size(); i+=2) {
+            reverse(nodesByLevel[i].begin(), nodesByLevel[i].end());
+        }
+        return nodesByLevel;
+    }
+};
+
+// 19 February, 2023
