@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int shipWithinDays(vector<int>& weights, int days) {
+        int minAns = 1, maxAns = 0, curAns, curDays, curWeight;
+        for (auto &el: weights) {
+            maxAns += el;
+            minAns = max(minAns, el);
+        }
+        int ans = -1;
+        while (minAns <= maxAns) {
+            curAns = (minAns + maxAns) / 2;
+            curDays = 1;
+            curWeight = 0;
+            for (auto &el: weights) {
+                curWeight += el;
+                if (curWeight > curAns) {
+                    curDays++;
+                    curWeight = el;
+                }
+            }
+            if (curDays <= days) {
+                ans = curAns;
+            }
+            if (curDays > days) {
+                minAns = curAns + 1;
+            }
+            else {
+                maxAns = curAns - 1;
+            }
+        }
+        return ans;
+    }
+};
+
+// 22 February, 2023
