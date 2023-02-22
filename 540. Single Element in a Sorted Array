@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int N = nums.size();
+        if (N == 1) return nums[0];
+        int left = 0, right = (N-1)/2, mid;
+        int ans = -1;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (nums[mid*2] != nums[mid*2+1]) {
+                ans = nums[mid*2];
+                right = mid - 1;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
+
+// 21 February, 2023
