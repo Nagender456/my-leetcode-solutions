@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
+        priority_queue< pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > minHeap;
+        priority_queue< int > maxHeap;
+
+        const int N = profits.size();
+
+        for (int i=0; i<N; i++) {
+            minHeap.push({capital[i], profits[i]});
+        }
+        pair<int, int> cur;
+        while (k > 0) {
+            while (!minHeap.empty()) {
+                cur = minHeap.top();
+                if (cur.first <= w) {
+                    maxHeap.push(cur.second);
+                    minHeap.pop();
+                }
+                else {
+                    break;
+                }
+            }
+            if (maxHeap.empty()) break;
+            w += maxHeap.top();
+            k--;
+            maxHeap.pop();
+        }
+        return w;
+    }
+};
+
+// 23 February, 2023
