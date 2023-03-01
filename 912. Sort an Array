@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        priority_queue<int, vector<int>, greater<int>> q;
+        for (auto el: nums) {
+            q.push(el);
+        }
+        vector<int> ans;
+        while (!q.empty()) {
+            ans.push_back(q.top());
+            q.pop();
+        }
+        return ans;
+    }
+};
+
+// 1 March, 2023
