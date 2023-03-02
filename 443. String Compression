@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        chars.push_back(' ');
+        char curChar = chars[0];
+        int curCount = 1;
+        int curIndex = 0;
+        for (int i=1; i<chars.size(); i++) {
+            if (curChar != chars[i]) {
+                if (curCount == 1) {
+                    chars[curIndex++] = curChar;
+                }
+                else {
+                    chars[curIndex++] = curChar;
+                    string number = "";
+                    while (curCount > 0) {
+                        number.push_back('0'+curCount%10);
+                        curCount /= 10;
+                    }
+                    reverse(number.begin(), number.end());
+                    for (int j=0; j<number.size(); j++) {
+                        chars[curIndex++] = number[j];
+                    }
+                }
+                curChar = chars[i];
+                curCount = 1;
+            }
+            else {
+                curCount++;
+            }
+        }
+        return curIndex;
+    }
+};
+
+// 2 March, 2023
