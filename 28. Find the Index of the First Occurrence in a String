@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool check(int j, int K, string &haystack, string &needle) {
+        for (int i=0; i<K; i++) {
+            if (needle[i] != haystack[j+i]) return false;
+        }
+        return true;
+    }
+    int strStr(string haystack, string needle) {
+        int N = haystack.size();
+        int K = needle.size();
+        for (int i=0; i<=N-K; i++) {
+            if (haystack[i] == needle[0] && check(i, K, haystack, needle)) return i; 
+        }
+        return -1;
+    }
+};
+
+// 3 March, 2023
