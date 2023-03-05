@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int minJumps(vector<int>& arr) {
+        int N = arr.size();
+        map<int, vector<int>> m;
+        for (int i=0; i<arr.size(); i++) {
+            m[arr[i]].push_back(i);
+        }
+        vector<bool> visited(N, false);
+        queue<pair<int, int>> q;
+        pair<int, int> cur;
+        int curI, curSteps;
+        visited[0] = true;
+        q.push({0, 0});
+        while (!q.empty()) {
+            cur = q.front();
+            curI = cur.first;
+            curSteps = cur.second;
+            if (curI == N-1) {
+                return curSteps;
+            }
+            q.pop();
+            if (curI > 0 && !visited[curI-1]) {
+                q.push({curI-1, curSteps+1});
+                visited[curI-1] = true;
+            }
+            if (curI < N-1 && !visited[curI+1]) {
+                q.push({curI+1, curSteps+1});
+                visited[curI+1] = true;
+            }
+            for (auto &el: m[arr[curI]]) {
+                if (!visited[el]) {
+                    q.push({el, curSteps+1});
+                    visited[el] = true;
+                }
+            }
+            m[arr[curI]].clear();
+        }
+        return -1;
+    }
+};
