@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int findKthPositive(vector<int>& arr, int k) {
+        arr.push_back(INT_MAX);
+        int cur = 1;
+        for (auto el: arr) {
+            if (el > cur) {
+                if (k <= el - cur) {
+                    return cur + k - 1;
+                }
+                else {
+                    k -= el - cur;
+                    cur = el;
+                }
+            }
+            cur++;
+        }
+        return -1;
+    }
+};
+
+// 5 March, 2023
