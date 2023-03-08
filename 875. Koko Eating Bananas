@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int left = 1, right = INT_MIN, mid, ans, curH;
+        for (auto &el: piles) {
+            right = max(right, el);
+        }
+        while (left <= right) {
+            mid = (left + right) / 2;
+            curH = h;
+            for (auto &el: piles) {
+                curH -= (el-1)/mid + 1;
+                if (curH < 0) break;
+            }
+            if (curH < 0) {
+                left = mid + 1;
+            }
+            else {
+                ans = mid;
+                right = mid - 1;
+            }
+        }
+        return ans;
+    }
+};
+
+// 8 March, 2023
