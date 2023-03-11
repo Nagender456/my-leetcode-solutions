@@ -1,0 +1,24 @@
+class Solution {
+public:
+    TreeNode* makeTree(vector<int>&arr, int start, int end) {
+        if (start > end) return NULL;
+        int mid = (start + end) / 2;
+        TreeNode* req = new TreeNode(arr[mid]);
+        req->left = makeTree(arr, start, mid-1);
+        req->right = makeTree(arr, mid+1, end);
+        return req;
+    }
+    TreeNode* sortedListToBST(ListNode* head) {
+        vector<int> arr;
+        while (head != NULL) {
+            arr.push_back(head->val);
+            head = head->next;
+        }
+        int N = arr.size();
+        if (N == 0) return NULL;
+        TreeNode* ans = makeTree(arr, 0, N-1);
+        return ans;
+    }
+};
+
+// 11 March, 2023
