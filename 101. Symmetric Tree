@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isMirror(TreeNode* tree1, TreeNode* tree2) {
+        if (tree1 == NULL) {
+            if (tree2 == NULL) return true;
+            return false;
+        }
+        if (tree2 == NULL) {
+            return false;
+        }
+        if (tree1->val != tree2->val) return false;
+        return isMirror(tree1->left, tree2->right) && isMirror(tree1->right, tree2->left);
+    }
+    bool isSymmetric(TreeNode* root) {
+        if (root == NULL) return true;
+        return isMirror(root->left, root->right);
+    }
+};
+
+// 13 March, 2023
