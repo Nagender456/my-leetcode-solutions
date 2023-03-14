@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> nums;
+    void traverse(TreeNode* node, int curNum) {
+        if (node == NULL) return;
+        int nextNum = curNum * 10 + node->val;
+        if (node->left == NULL && node->right == NULL) {
+            nums.push_back(nextNum);
+            return;
+        }
+        traverse(node->left, nextNum);
+        traverse(node->right, nextNum);
+    }
+    int sumNumbers(TreeNode* root) {
+        traverse(root, 0);
+        int ans = 0;
+
+        for (auto &num: nums) {
+            ans += num;
+        }
+        return ans;
+    }
+};
+
+// 14 March, 2023
