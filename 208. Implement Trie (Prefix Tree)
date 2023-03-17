@@ -1,0 +1,47 @@
+class Trie {
+public:
+    vector<Trie*> next;
+    char curChar;
+    bool isEnd;
+    Trie() {
+        this->next = vector<Trie*>(26, NULL);
+        this->curChar = '0';
+        this->isEnd = true;
+    }
+    Trie(char curChar) {
+        this->next = vector<Trie*>(26, NULL);
+        this->curChar = curChar;
+        this->isEnd = false;
+    }
+    
+    void insert(string word) {
+        if (word.length() == 0) {
+            this->isEnd = true;
+        } else {
+            int index = word[0] - 'a';
+            if (next[index] == NULL) {
+                next[index] = new Trie(word[0]);
+            }
+            next[index]->insert(word.substr(1));
+        }
+    }
+    
+    bool search(string word) {
+        if (word.length() == 0 ) {
+            if (this->isEnd) return true;
+            return false;
+        } 
+        int index = word[0] - 'a';
+        if (next[index] == NULL) return false;
+        return next[index]->search(word.substr(1));
+    }
+    
+    bool startsWith(string prefix) {
+        if (prefix.length() == 0) return true;
+        int index = prefix[0] - 'a';
+        if (next[index] == NULL) return false;
+        return next[index]->startsWith(prefix.substr(1));
+    }
+};
+
+// 17 March, 2023
