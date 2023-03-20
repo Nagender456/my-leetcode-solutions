@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+        int curCount = 1;
+        int maxPossible = 0;
+        flowerbed.push_back(0);
+        for (auto &el: flowerbed) {
+            if (el == 1 && curCount > 0) {
+                maxPossible += (curCount-1)/2;
+                if (maxPossible >= n) return true;
+                curCount=0;
+            } else {
+                curCount++;
+            }
+        }
+        maxPossible += (curCount-1)/2;
+        if (maxPossible >= n) return true;
+        return false;
+    }
+};
+
+// 20 March, 2023
