@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void visitComponent(int node, vector<bool>&visited, unordered_map<int, vector<int>>&m) {
+        visited[node] = true;
+        for (auto &el: m[node]) {
+            if (!visited[el]) visitComponent(el, visited, m);
+        }
+    }
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        if (connections.size() < n-1) return -1;
+        unordered_map<int, vector<int>> m;
+        vector<bool> visited(n, false);
+        int numComponents = 0;
+        for (auto &el: connections) {
+            m[el[0]].push_back(el[1]);
+            m[el[1]].push_back(el[0]);
+        }
+        for (int i=0; i<n; i++) {
+            if (!visited[i]) {
+                numComponents++;
+                visitComponent(i, visited, m);
+            }
+        }
+        return numComponents-1;
+    }
+};
+
+// 23 March, 2023
