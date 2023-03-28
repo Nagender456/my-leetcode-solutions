@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> dp;
+    int N;
+    int solve(int index, vector<int>&days, vector<int>&costs) {
+        if (index >= this->N) return 0;
+        if (dp[index] == -1) {
+            int ans1 = costs[0] + solve(index+1, days, costs);
+            int curIndex;
+            for (curIndex=index; curIndex<N; curIndex++) {
+                if (days[curIndex] - days[index] >= 7) {
+                    break;
+                }
+            }
+            int ans2 = costs[1] + solve(curIndex, days, costs);
+            for (curIndex=index; curIndex<N; curIndex++) {
+                if (days[curIndex] - days[index] >= 30) {
+                    break;
+                }
+            }
+            int ans3 = costs[2] + solve(curIndex, days, costs);
+            dp[index] = min(ans1, min(ans2, ans3));
+        }
+        return dp[index];
+    }
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        this->N = days.size();
+        this->dp = vector<int>(N, -1);
+        int ans = solve(0, days, costs);
+        return ans;
+    }
+};
+
+// 28 March, 2023
