@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+        sort(potions.begin(), potions.end());
+        vector<int> ans;
+        long long required, curAns, spell;
+        for (auto &el: spells) {
+            spell = el;
+            required = (success-1) / spell + 1;
+            auto pos = lower_bound(potions.begin(), potions.end(), required);
+            curAns = potions.end() - pos;
+            ans.push_back(curAns);
+        }
+        return ans;
+    }
+};
+
+// 2 April, 2023
