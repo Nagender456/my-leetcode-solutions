@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string removeStars(string s) {
+        stack<char> st;
+        int L = s.length();
+        string ans = "";
+        int stars = 0;
+        for (int i=L-1; i>=0; i--) {
+            if (s[i] == '*') {
+                stars++;
+                continue;
+            }
+            if (stars <= 0) {
+                ans+=s[i];
+                continue;
+            }
+            stars--;
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+// 11 April, 2023
