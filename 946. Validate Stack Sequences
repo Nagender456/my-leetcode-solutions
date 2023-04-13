@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        stack<int> st;
+        int pushInd = 0;
+        int popInd = 0;
+        int N1 = pushed.size();
+        int N2 = pushed.size();
+        while (pushInd < N1 || popInd < N2) {
+            if (st.empty()) {
+                if (pushInd >= N1) return false;
+                st.push(pushed[pushInd]);
+                pushInd++;
+            } else if (popInd < N2 && st.top() == popped[popInd]) {
+                st.pop();
+                popInd++;
+            } else if (pushInd < N1) {
+                st.push(pushed[pushInd]);
+                pushInd++;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+// 13 April, 2023
