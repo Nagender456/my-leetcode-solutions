@@ -1,0 +1,18 @@
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        int L1 = word1.size(), L2 = word2.size();
+        int index = 0;
+        string ans = "";
+        while (index < L1 && index < L2) {
+            ans += word1[index];
+            ans += word2[index];
+            index++;
+        }
+        while (index < L1) ans += word1[index++];
+        while (index < L2) ans += word2[index++];
+        return ans;
+    }
+};
+
+// April 18, 2023
