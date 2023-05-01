@@ -1,0 +1,23 @@
+class Solution {
+public:
+    double average(vector<int>& salary) {
+        double ans;
+        double total = 0;
+        sort(salary.begin(), salary.end());
+        double N = salary.size();
+        int maxSal = INT_MIN;
+        int minSal = INT_MAX;
+        for (auto &el: salary) {
+            total += el;
+            maxSal = max(maxSal, el);
+            minSal = min(minSal, el);
+        }
+        total -= maxSal;
+        total -= minSal;
+
+        ans = total / (N-2);
+        return ans;
+    }
+};
+
+// May 01, 2023
