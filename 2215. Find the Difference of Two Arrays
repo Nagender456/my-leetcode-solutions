@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
+        vector<vector<int>> ans(2, vector<int>(0));
+        for (auto &el: nums1) {
+            if (find(ans[0].begin(), ans[0].end(), el) == ans[0].end() &&
+            find(nums2.begin(), nums2.end(), el) == nums2.end()) {
+                ans[0].push_back(el);
+            }
+        }
+        for (auto &el: nums2) {
+            if (find(ans[1].begin(), ans[1].end(), el) == ans[1].end() &&
+            find(nums1.begin(), nums1.end(), el) == nums1.end()) {
+                ans[1].push_back(el);
+            }
+        }
+        return ans;
+    }
+};
+
+// May 03, 2023
