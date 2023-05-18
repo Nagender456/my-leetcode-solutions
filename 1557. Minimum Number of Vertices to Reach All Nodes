@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> findSmallestSetOfVertices(int n, vector<vector<int>>& edges) {
+        vector<bool> isHead(n, true);
+        for (auto &el: edges) {
+            isHead[el[1]] = false;
+        }
+        vector<int> ans;
+        for (int i=0; i<n; i++) {
+            if (isHead[i]) {
+                ans.push_back(i);
+            }
+        }
+        return ans;
+    }
+};
+
+// May 18, 2023
