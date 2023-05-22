@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        map<int, int> freq;
+        vector<int> freqVector;
+        for (auto &num: nums) {
+            freq[num]++;
+        }
+        for (auto &el: freq) {
+            freqVector.push_back(el.second);
+        }
+        sort(freqVector.begin(), freqVector.end(), greater<int>());
+        vector<int> ansVector;
+        for (int i=0; i<k; i++) {
+            ansVector.push_back(freqVector[i]);
+        }
+        vector<int> ans;
+        for (auto &el: freq) {
+            if (find(ansVector.begin(), ansVector.end(), el.second) != ansVector.end()) {
+                ans.push_back(el.first);
+            }
+        }
+        return ans;
+    }
+};
+
+// May 22, 2023
