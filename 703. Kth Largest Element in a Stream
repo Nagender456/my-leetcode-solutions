@@ -1,0 +1,21 @@
+class KthLargest {
+public:
+    int k;
+    priority_queue<int, vector<int>, greater<int>> q;
+    KthLargest(int k, vector<int>& nums) {
+        this->k = k;
+        for (auto &el: nums) this->q.push(el);
+        while (q.size() > this->k) this->q.pop();
+    }
+    
+    int add(int val) {
+        if (this->q.size() < k) this->q.push(val);
+        else if (val > this->q.top()) {
+            this->q.push(val);
+            this->q.pop();
+        }
+        return this->q.top();
+    }
+};
+
+// May 23, 2023
