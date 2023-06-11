@@ -1,0 +1,30 @@
+class SnapshotArray {
+public:
+    vector<map<int, int>> arr;
+    int numSnap;
+    SnapshotArray(int length) {
+        numSnap = 0;
+        arr = vector<map<int, int>>(length, map<int, int>());
+        for (int i=0; i<length; i++) {
+            arr[i][numSnap] = 0;
+        }
+    }
+    
+    void set(int index, int val) { 
+        arr[index][numSnap] = val;
+    }
+    
+    int snap() {
+        numSnap++;
+        return numSnap-1;
+    }
+    
+    int get(int index, int snap_id) {
+        while (arr[index].find(snap_id) == arr[index].end()) {
+            snap_id--;
+        }
+        return arr[index][snap_id];
+    }
+};
+
+// June 11, 2023
