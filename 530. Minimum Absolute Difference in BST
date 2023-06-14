@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> arr;
+    void inorder(TreeNode* node) {
+        if (node == NULL) return;
+        inorder(node->left);
+        arr.push_back(node->val);
+        inorder(node->right);
+    }
+    int getMinimumDifference(TreeNode* root) {
+        inorder(root);
+        int ans = INT_MAX;
+        for (int i=1; i<arr.size(); i++) {
+            ans = min(ans, arr[i] - arr[i-1]);
+        }
+        return ans;
+    }
+};
+
+// June 14, 2023
