@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int largestAltitude(vector<int>& gain) {
+        int pre = 0;
+        int ans = 0;
+        for (auto &el: gain) {
+            pre += el;
+            ans = max(pre, ans);
+        }
+        return ans;
+    }
+};
+
+// June 19, 2023
