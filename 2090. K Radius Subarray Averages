@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> getAverages(vector<int>& nums, int k) {
+        int N = nums.size();
+        vector<int> ans(N, -1);
+        if (N < 2*k+1) return ans;
+        long int curSum = 0;
+        for (int i=0; i<2*k+1; i++) {
+            curSum += nums[i];
+        }
+        int divisor = 2*k+1;
+        for (int i=k; i<N-k; i++) {
+            ans[i] = curSum / divisor;
+            if (i >= N-k-1) break;
+            curSum -= nums[i-k];
+            curSum += nums[i+k+1]; 
+        }
+        return ans;
+    }
+};
+
+// June 20, 2023
