@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int ans;
+    void distribute(vector<int>& cookies, int index, vector<int>& distribution) {
+        if (index >= cookies.size()) {
+            int curAns = distribution[0];
+            for (int i=1; i<distribution.size(); i++) {
+                curAns = max(curAns, distribution[i]);
+            }
+            this->ans = min(this->ans, curAns);
+            return;
+        }
+        for (int i=0; i<distribution.size(); i++) {
+            distribution[i] += cookies[index];
+            if (distribution[i] < this->ans) {
+                distribute(cookies, index+1, distribution);
+            }
+            distribution[i] -= cookies[index];
+        }
+    }
+    int distributeCookies(vector<int>& cookies, int k) {
+        this->ans = INT_MAX;
+        vector<int> distribution(k, 0);
+        distribute(cookies, 0, distribution);
+        return this->ans;
+    }
+};
+
+// July 1, 2023
