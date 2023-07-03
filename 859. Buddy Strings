@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool buddyStrings(string s, string goal) {
+        if (s.length() != goal.length()) return false;
+        int I=-1, J=-1;
+        vector<bool> seen(26, false);
+        bool twos = false;
+        for (int i=0; i<s.length(); i++) {
+            if (s[i] != goal[i]) {
+                if (I == -1) {
+                    I = i;
+                } else if (J == -1) {
+                    J = i;
+                } else {
+                    return false;
+                }
+            }
+            if (seen[s[i]-'a']) twos = true;
+            seen[s[i]-'a'] = true;
+        }
+        if (I == -1 && J == -1) {
+            if (twos) return true;
+            return false;
+        } else if (I == -1 || J == -1) {
+            return false;
+        }
+        if (s[I] == goal[J] && s[J] == goal[I]) return true;
+        return false;
+    }
+};
+
+// July 3, 2023
