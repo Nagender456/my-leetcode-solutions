@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int isSafe(vector<vector<int>>& graph, vector<int>& dpSafe, int i) {
+        if (dpSafe[i] == -1) {
+            int safe = 1;
+            dpSafe[i] = 0;
+            for (auto &el: graph[i]) {
+                if (isSafe(graph, dpSafe, el) == 0) {
+                    safe = 0;
+                    break;
+                }
+            }
+            dpSafe[i] = safe;
+        }
+        return dpSafe[i];
+    }
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        vector<int> dpSafe = vector<int>(graph.size(), -1);
+        vector<int> ans;
+        for (int i=0; i<graph.size(); i++) {
+            if (isSafe(graph, dpSafe, i) == 1) {
+                ans.push_back(i);
+            }
+        }
+        return ans;
+    }
+};
+
+// July 12, 2023
