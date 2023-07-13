@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int isDoable(int course, vector<vector<int>> &dependingCourses, vector<int> &dpCourses) {
+        if (dpCourses[course] == -1) {
+            int doable = 1;
+            dpCourses[course] = 0;
+            for (auto &depending: dependingCourses[course]) {
+                if (isDoable(depending, dependingCourses, dpCourses) == 0) {
+                    doable = 0;
+                    break;
+                }
+            }
+            dpCourses[course] = doable;
+        }
+        return dpCourses[course];
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> dependingCourses(numCourses);
+        for (int i=0; i<prerequisites.size(); i++) {
+            dependingCourses[prerequisites[i][0]].push_back(prerequisites[i][1]);
+        }
+        vector<int> dpCourses(numCourses, -1);
+        for (int i=0; i<numCourses; i++) {
+            if (isDoable(i, dependingCourses, dpCourses) == 0) return false;
+        }
+        return true;
+    }
+};
+
+// July 13, 2023
