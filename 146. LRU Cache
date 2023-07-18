@@ -1,0 +1,34 @@
+class LRUCache {
+public:
+    unordered_map<int, int> valuesMap;
+    unordered_map<int, int> numTimes;
+    queue<int> orderQueue;
+    int capacity;
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+    }
+    
+    int get(int key) {
+        if (valuesMap.find(key) == valuesMap.end()) return -1;
+        numTimes[key]++;
+        orderQueue.push(key);
+        return valuesMap[key];
+    }
+    
+    void put(int key, int value) {
+        valuesMap[key] = value;
+        numTimes[key]++;
+        orderQueue.push(key);
+        while (valuesMap.size() > capacity) {
+            int temp = orderQueue.front();
+            orderQueue.pop();
+            numTimes[temp]--;
+            if (numTimes[temp] == 0) {
+                numTimes.erase(temp);
+                valuesMap.erase(temp);
+            }
+        }
+    }
+};
+
+// July 18, 2023
