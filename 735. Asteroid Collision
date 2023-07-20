@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool eliminate(stack<int>& s) {
+        int right = s.top(); s.pop();
+        if (s.empty()) {
+            s.push(right);
+            return false;
+        }
+        int left = s.top(); s.pop();
+
+        if (left < 0 || right > 0) {
+            s.push(left);
+            s.push(right);
+            return false;
+        } else if (left == -right) {
+            return false;
+        } else if (left < -right) {
+            s.push(right);
+            return true;
+        } else {
+            s.push(left);
+            return false;
+        }
+
+    }
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        stack<int> s;
+        for (auto &el: asteroids) {
+            s.push(el);
+            while (eliminate(s)) {}
+        }
+        vector<int> ans(s.size());
+        int i = s.size() - 1;
+        while (!s.empty()) {
+            ans[i] = s.top();
+            s.pop();
+            i--;
+        }
+        return ans;
+    }
+};
+
+// July 20, 2023
