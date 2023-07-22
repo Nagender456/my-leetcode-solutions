@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<pair<int, int>> directions;
+    float helper(int n, int k, int row, int column, vector<vector<vector<float>>>& dp) {
+        if (row < 0 || column < 0 || row >= n || column >= n) return 0;
+        if (dp[row][column][k] < 0) {
+            float totalProbability = 0;
+            for (auto &el: directions) {
+                totalProbability += helper(n, k-1, row+el.first, column+el.second, dp);
+            }
+            totalProbability /= 8;
+            dp[row][column][k] = totalProbability;
+        }
+        return dp[row][column][k];
+    }
+    double knightProbability(int n, int k, int row, int column) {
+        vector<vector<vector<float>>> dp(n, vector<vector<float>>(n, vector<float>(k+1, -1)));
+        directions = {
+            {-2, -1},
+            {-2, 1},
+            {-1, -2},
+            {-1, 2},
+            {1, -2},
+            {1, 2},
+            {2, -1},
+            {2, 1}
+        };
+        for (int i=0; i<n; i++) {
+            for (int j=0; j<n; j++) {
+                dp[i][j][0] = 1;
+            }
+        }
+
+        return helper(n, k, row, column, dp);
+    }
+};
+
+// July 22, 2023
