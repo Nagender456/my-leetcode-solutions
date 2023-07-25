@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int left = 0;
+        int right = arr.size()-1;
+        int ansIndex;
+        while (left <= right) {
+            ansIndex = (left + right) / 2;
+            if (ansIndex-1 < 0 || arr[ansIndex-1] < arr[ansIndex]) {
+                if (ansIndex+1 >= arr.size() || arr[ansIndex+1] < arr[ansIndex]) break;
+                else left = ansIndex+1;
+            }
+            else {
+                right = ansIndex-1;
+            }
+        }
+        return ansIndex;
+    }
+};
+
+// July 25, 2023
