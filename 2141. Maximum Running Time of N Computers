@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool check(vector<int>& batteries, int n, long long timeToRun) {
+        long long remSum = 0, k = 0, batteriesRequired;
+        while (k < batteries.size() && batteries[k] >= timeToRun) k++;
+        batteriesRequired = (n - k) * timeToRun;
+        if (batteriesRequired <= 0) return true;
+        for (long long i=k; i<batteries.size(); i++) remSum += batteries[i];
+        return batteriesRequired <= remSum;
+
+    }
+    long long maxRunTime(int n, vector<int>& batteries) {
+        long long totalSum=0, left, right, mid, ans=-1;
+        sort(batteries.begin(), batteries.end(), greater<int>());
+        for (auto &el: batteries) {
+            totalSum += el;
+        }
+        left = batteries[batteries.size()-1];
+        right = totalSum / n;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (check(batteries, n, mid)) {
+                ans = mid;
+                left = mid+1;
+            } else {
+                right = mid-1;
+            }
+        }
+        return ans;
+    }
+};
+
+// July 27, 2023
