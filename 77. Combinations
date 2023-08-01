@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> ans;
+    void helper(int n1, int n2, int k, vector<int>& cur) {
+        if (k > n2-n1+1) return;
+        if (k == 0) {
+            vector<int> temp = cur;
+            ans.push_back(temp);
+            return;
+        }
+        helper(n1+1, n2, k, cur);
+        cur.push_back(n1);
+        helper(n1+1, n2, k-1, cur);
+        cur.pop_back();
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> temp;
+        helper(1, n, k, temp);
+        return ans;
+    }
+};
+
+// August 01, 2023
