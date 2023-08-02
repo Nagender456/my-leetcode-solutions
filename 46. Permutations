@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> helper(vector<int>& nums, int size, vector<vector<vector<int>>> &dp) {
+        if (dp[size].size() == 0) {
+            vector<vector<int>> curAns;
+            vector<vector<int>> temp = helper(nums, size-1, dp);
+            for (auto &num: nums) {
+                for (auto &el: temp) {
+                    if (find(el.begin(), el.end(), num) == el.end()) {
+                        vector<int> tempCur = el;
+                        tempCur.push_back(num);
+                        curAns.push_back(tempCur);
+                    }
+                }
+            }
+            dp[size] = curAns;
+        }
+        return dp[size];
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        int N = nums.size();
+        vector<vector<vector<int>>> dp(N+1, vector<vector<int>>(0));
+        for (auto &num: nums) {
+            dp[1].push_back({num});
+        }
+        return helper(nums, nums.size(), dp);
+    }
+};
+
+// 02 August, 2023
