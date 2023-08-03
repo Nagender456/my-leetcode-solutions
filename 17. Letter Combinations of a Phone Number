@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        if (digits.length() == 0) return {};
+        map<char, vector<char>> digitMapping = {
+            {'2', {'a', 'b', 'c'}},
+            {'3', {'d', 'e', 'f'}},
+            {'4', {'g', 'h', 'i'}},
+            {'5', {'j', 'k', 'l'}},
+            {'6', {'m', 'n', 'o'}},
+            {'7', {'p', 'q', 'r', 's'}},
+            {'8', {'t', 'u', 'v'}},
+            {'9', {'w', 'x', 'y', 'z'}}
+        };
+        vector<string> ans;
+        vector<string> curAns = {""};
+        while (digits.length() > 0) {
+            for (auto &afterChar: digitMapping[digits[0]]) {
+                for (auto &beforeString: curAns) {
+                    ans.push_back(beforeString + afterChar);
+                }
+            }
+            curAns = ans;
+            ans.clear();
+            digits = digits.substr(1, digits.length()-1);
+        }
+        return curAns;
+    }
+};
+
+// 03 August, 2023
