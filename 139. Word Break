@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool helper(int index, string &s, vector<string>& wordDict, vector<int>& dp) {
+        if (index == s.length()) return true;
+        if (dp[index] == -1) {
+            int ans = 0;
+            int curAns;
+            for (auto &word: wordDict) {
+                if (word.size() > (s.length()-index)) continue;
+                if (word == s.substr(index, word.size())) {
+                    curAns = helper(index + word.size(), s, wordDict, dp);
+                    if (curAns) {
+                        ans = 1;
+                        break;
+                    }
+                }
+            }
+            dp[index] = ans;
+        }
+        if (dp[index] == 1) return true;
+        return false;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int L = s.length();
+        vector<int> dp(L, -1);
+        return helper(0, s, wordDict, dp);
+    }
+};
+
+// 04 August, 2023
