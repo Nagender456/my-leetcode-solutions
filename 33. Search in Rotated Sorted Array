@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left = 0;
+        int N = nums.size();
+        int right = N-1;
+        int mid;
+        int rotated = 0;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (mid >= N-1) break;
+            if (nums[mid] > nums[mid+1]) {
+                rotated = mid+1;
+                break;
+            } else if (nums[mid] >= nums[0]) {
+                left = mid+1;
+            } else {
+                right = mid-1;
+            }
+        }
+        left = 0, right = N-1;
+        int rIndex;
+        while (left <= right) {
+            mid = (left+right) / 2;
+            rIndex = (mid+rotated) % N;
+            if (nums[rIndex] == target) {
+                return rIndex;
+            } else if (nums[rIndex] > target) {
+                right = mid-1;
+            } else {
+                left = mid+1;
+            }
+        }
+        return -1;
+    }
+};
+
+// August 08, 2023
