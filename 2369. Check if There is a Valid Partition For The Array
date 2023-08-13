@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<int> dp;
+    bool helper(int index, vector<int>& nums) {
+        if (index >= nums.size()) return true;
+        if (dp[index] == -1) {
+            bool res;
+            if (index+2 < nums.size()) {
+                if (nums[index] == nums[index+1] && nums[index+1] == nums[index+2]) {
+                    res = helper(index+3, nums);
+                    if (res) {
+                        dp[index] = 1;
+                        return dp[index];
+                    }
+                }
+                if (nums[index]+1 == nums[index+1] && nums[index+1]+1 == nums[index+2]) {
+                    res = helper(index+3, nums);
+                    if (res) {
+                        dp[index] = 1;
+                        return dp[index];
+                    }
+                }
+            }
+            if (index+1 < nums.size()) {
+                if (nums[index] == nums[index+1]) {
+                    res = helper(index+2, nums);
+                    if (res) {
+                        dp[index] = 1;
+                        return dp[index];
+                    }
+                }
+            }
+            dp[index] = 0;
+        }
+        return dp[index];
+    }
+    bool validPartition(vector<int>& nums) {
+        dp = vector<int>(nums.size(), -1);
+        return helper(0, nums);
+    }
+};
+
+// August 13, 2023
