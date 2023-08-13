@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<pair<int, int>> dir;
+    int m, n;
+    int helper(int row, int col, vector<vector<int>>& obstacleGrid, vector<vector<int>>& dp, vector<vector<bool>>& visited) {
+        visited[row][col] = true;
+        if (dp[row][col] == -1) {
+            int newRow, newCol;
+            int curAns = 0;
+            for (auto &el: dir) {
+                newRow = row + el.first;
+                newCol = col + el.second;
+                if (newRow >= this->m || newCol >= this->n) continue;
+                if (visited[newRow][newCol]) continue;
+                if (obstacleGrid[newRow][newCol] == 1) continue;
+                curAns += helper(newRow, newCol, obstacleGrid, dp, visited);
+            }
+            dp[row][col] = curAns;
+        }
+        visited[row][col] = false;
+        return dp[row][col];
+    }
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        this->m = obstacleGrid.size();
+        this->n = obstacleGrid[0].size();
+        if (obstacleGrid[this->m-1][this->n-1] || obstacleGrid[0][0]) return 0;
+        vector<vector<int>> dp(this->m, vector<int>(this->n, -1));
+        vector<vector<bool>> visited(this->m, vector<bool>(this->n, false));
+        this->dir = {
+            {1, 0},
+            {0, 1},
+        };
+        dp[this->m-1][this->n-1] = 1;
+        return helper(0, 0, obstacleGrid, dp, visited);
+    }
+};
+
+// August 12, 2023
