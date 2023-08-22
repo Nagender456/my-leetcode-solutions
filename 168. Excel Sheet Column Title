@@ -1,0 +1,17 @@
+class Solution {
+public:
+    string convertToTitle(int columnNumber) {
+        string ans = "";
+        int rem; char cur;
+        while (columnNumber) {
+            rem = columnNumber % 26;
+            columnNumber = (columnNumber-1)/26;
+            if (rem == 0) cur = 'Z';
+            else cur = 'A' + rem - 1;
+            ans = cur + ans;
+        }
+        return ans;
+    }
+};
+
+// August 22, 2023
