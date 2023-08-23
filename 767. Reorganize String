@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string reorganizeString(string s) {
+        map<char, int> count;
+        int L = s.length();
+        for (int i=0; i<L; i++) {
+            count[s[i]]++;
+        }
+        for (auto el: count) {
+            if (L%2 == 0 && el.second > L/2) return "";
+            else if (L%2 == 1 && el.second > (L/2+1)) return "";
+        }
+        priority_queue<pair<int, char>> pq;
+        for (auto el: count) {
+            pq.push({el.second, el.first});
+        }
+        vector<char> ans(L, '$');
+        int index = 0;
+        while (!pq.empty()) {
+            auto el = pq.top(); pq.pop();
+            for (int i=0; i<el.first; i++) {
+                ans[index] = el.second;
+                index += 2;
+                if (index >= L) {
+                    index = 0;
+                }
+                while (index < L && ans[index] != '$') index++;
+            }
+        }
+        string finalAns = "";
+        for (auto el: ans) {
+            finalAns += el;
+        }
+        return finalAns;
+    }
+};
+
+// August 23, 2023
