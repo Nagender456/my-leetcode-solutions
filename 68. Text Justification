@@ -1,0 +1,58 @@
+class Solution {
+public:
+    vector<string> ans;
+    string adjustString(vector<string>& words, int spaces) {
+        if (words.size() == 1) {
+            string temp(spaces, ' ');
+            return words[0] + temp;
+        }
+        string required = "";
+        int wordsCount = words.size();
+        int wordIndex = 0;
+        int spaceLength = spaces/(wordsCount-1);
+        for (int i=0; i<spaces%(wordsCount-1); i++) {
+            string spaces(spaceLength+1, ' ');
+            required += words[wordIndex] + spaces;
+            wordIndex++;
+        }
+        while (wordIndex < wordsCount-1) {
+            string spaces(spaceLength, ' ');
+            required += words[wordIndex] + spaces;
+            wordIndex++;
+        }
+        required += words[wordIndex];
+        return required;
+    }
+    string leftAdjustString(vector<string>&words, int length) {
+        string required = "";
+        for (int i=0; i<words.size()-1; i++) {
+            required += words[i] + ' ';
+            length -= words[i].length()+1;
+        }
+        required += words[words.size()-1];
+        length -= words[words.size()-1].length();
+        string temp(length, ' ');
+        return required + temp;
+    }
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> curWords;
+        int lengthRemaining = maxWidth;
+        vector<string> ans;
+        for (int i=0; i<words.size(); i++) {
+            int curWordLen = words[i].length();
+            if (curWordLen > lengthRemaining) {
+                ans.push_back(adjustString(curWords, lengthRemaining+curWords.size()));
+                curWords.clear();
+                lengthRemaining = maxWidth;
+            }
+            curWords.push_back(words[i]);
+            lengthRemaining -= curWordLen + 1;
+            if (i == words.size()-1) {
+                ans.push_back(leftAdjustString(curWords, maxWidth));
+            }
+        }
+        return ans;
+    }
+};
+
+// August 24, 2023
