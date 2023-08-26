@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int helper(int index, vector<vector<int>>& pairs, vector<int>& dp) {
+        if (index >= pairs.size()) return 0;
+        if (dp[index] == -1) {
+            int curAns = 0;
+            for (int i=index+1; i<pairs.size(); i++) {
+                if (pairs[index][1] < pairs[i][0]) {
+                    curAns = max(curAns, helper(i, pairs, dp));
+                }
+            }
+            curAns++;
+            dp[index] = curAns;
+        }
+        return dp[index];
+    }
+    int findLongestChain(vector<vector<int>>& pairs) {
+        int N = pairs.size();
+        sort(pairs.begin(), pairs.end());
+        vector<int> dp(N, -1);
+        int ans = INT_MIN;
+        for (int i=0; i<N; i++) {
+            ans = max(ans, helper(i, pairs, dp));
+        }
+        return ans;
+    }
+};
+
+// August 26, 2023
