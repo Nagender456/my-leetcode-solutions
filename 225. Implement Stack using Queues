@@ -1,0 +1,40 @@
+class MyStack {
+public:
+    queue<int> myQueue;
+    MyStack() {
+        
+    }
+    
+    void push(int x) {
+        myQueue.push(x);
+    }
+    
+    int pop() {
+        queue<int> temp;
+        while (myQueue.size() > 1) {
+            temp.push(myQueue.front());
+            myQueue.pop();
+        }
+        int req = myQueue.front();
+        myQueue = temp;
+        return req;
+    }
+    
+    int top() {
+        queue<int> temp;
+        while (myQueue.size() > 1) {
+            temp.push(myQueue.front());
+            myQueue.pop();
+        }
+        int req = myQueue.front();
+        temp.push(myQueue.front());
+        myQueue = temp;
+        return req;
+    }
+    
+    bool empty() {
+        return myQueue.empty();
+    }
+};
+
+// August 28, 2023
