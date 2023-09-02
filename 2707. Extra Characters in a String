@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isPresent(string &s, int index, string &word) {
+        if (s.length() - index < word.length()) return false;
+        return s.substr(index, word.size()) == word;
+    }
+    int minExtraChar(string s, vector<string>& dictionary) {
+        int L = s.length(); 
+        vector<int> dp(L+1, L);
+        dp[0] = 0;
+        for (int i=0; i<L; i++) {
+            for (auto &word: dictionary) {
+                if (isPresent(s, i, word)) {
+                    dp[i+word.size()] = min(dp[i+word.size()], dp[i]);
+                }
+            }
+            dp[i+1] = min(dp[i+1], dp[i]+1);
+        }
+        return dp[L];
+    }
+};
+
+// September 02, 2023
