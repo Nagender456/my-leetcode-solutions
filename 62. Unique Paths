@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int m, n;
+    int helper(int row, int col, vector<vector<int>> &dp) {
+        if (dp[row][col] == -1) {
+            int curAns = 0;
+            int newRow = row+1;
+            int newCol = col+1;
+            if (newRow < m) {
+                curAns += helper(newRow, col, dp);
+            } if (newCol < n) {
+                curAns += helper(row, newCol, dp);
+            }
+            dp[row][col] = curAns;
+        }
+        return dp[row][col];
+    }
+    int uniquePaths(int m, int n) {
+        this->m = m;
+        this->n = n;
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        dp[m-1][n-1] = 1;
+        return helper(0, 0, dp);
+    }
+};
+
+// September 09, 2023
