@@ -1,0 +1,22 @@
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if (left == right) return head;
+        vector<int> nodes;
+        while (head != NULL) {
+            nodes.push_back(head->val);
+            head = head->next;
+        }
+        reverse(nodes.begin() + left - 1, nodes.begin() + right);
+        ListNode* ans = new ListNode(0);
+        ListNode* temp = ans;
+        for (auto &node: nodes) {
+            ListNode* t = new ListNode(node);
+            temp->next = t;
+            temp = temp->next;
+        }
+        return ans->next;
+    }
+};
+
+// September 07, 2023
