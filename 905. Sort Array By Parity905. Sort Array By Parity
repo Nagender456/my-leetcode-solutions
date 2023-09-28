@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& nums) {
+        int N = nums.size();
+        int firstOdd = -1;
+        int temp, i=0;
+        for (; i<N; i++) {
+            if (nums[i]%2 == 1) {
+                firstOdd = i;
+                break;
+            }
+        }
+        for (; i<N; i++) {
+            if (nums[i]%2 == 0){
+                temp = nums[i];
+                nums[i] = nums[firstOdd];
+                nums[firstOdd] = temp;
+                while (nums[firstOdd] % 2 == 0) {
+                    firstOdd++;
+                    if (firstOdd >= N) {
+                        firstOdd = -1;
+                        break;
+                    }
+                } 
+            }
+        }
+        return nums;
+    }
+};
+
+// September 28, 2023
