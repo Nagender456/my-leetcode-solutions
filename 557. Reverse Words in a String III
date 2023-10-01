@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int L = s.length();
+        string ans = "";
+        string curWord = "";
+        for (int i=0; i<L; i++) {
+            if (s[i] == ' ') {
+                ans += curWord;
+                ans += ' ';
+                curWord = "";
+                continue;
+            } else {
+                curWord = s[i] + curWord;
+            }
+        }
+        ans += curWord;
+        return ans;
+    }
+};
+
+// October 01, 2023
