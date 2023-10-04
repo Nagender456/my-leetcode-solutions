@@ -1,0 +1,21 @@
+class MyHashMap {
+public:
+    vector<int> arr;
+    MyHashMap() {
+        this->arr = vector<int>(1000001, -1);
+    }
+    
+    void put(int key, int value) {
+        this->arr[key] = value;
+    }
+    
+    int get(int key) {
+        return this->arr[key];
+    }
+    
+    void remove(int key) {
+        this->arr[key] = -1;
+    }
+};
+
+// October 04, 2023
