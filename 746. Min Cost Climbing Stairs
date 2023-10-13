@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int ans;
+    int solve(int index, vector<int>& cost, vector<int>& dp) {
+        if (index >= cost.size()) return 0;
+        if (dp[index] == -1) {
+            int curAns = min(solve(index+1, cost, dp), solve(index+2, cost, dp));
+            curAns += cost[index];
+            dp[index] = curAns;
+        }
+        return dp[index];
+    }
+    int minCostClimbingStairs(vector<int>& cost) {
+        int N = cost.size();
+        vector<int> dp = vector<int>(N+1, -1);
+        ans = min(solve(0, cost, dp), solve(1, cost, dp));
+        return ans;
+    }
+};
+
+// October 13, 2023
