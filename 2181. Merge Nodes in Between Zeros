@@ -1,0 +1,28 @@
+class Solution {
+public:
+    ListNode* mergeNodes(ListNode* head) {
+        ListNode* ans = new ListNode(0);
+        ListNode* cur = ans;
+        int curNum = 0;
+        bool started = false;
+        while (head != NULL) {
+            if (head->val == 0) {
+                if (!started) {
+                    started = true;
+                    continue;
+                }
+                if (curNum > 0) {   
+                    cur->next = new ListNode(curNum);
+                    cur = cur->next;
+                    curNum = 0;
+                }
+                started = false;
+            }
+            curNum += head->val;
+            head = head->next;
+        }
+        return ans->next;
+    }
+};
+
+// 04 July, 2024
