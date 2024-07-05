@@ -1,0 +1,37 @@
+class Solution {
+    int startCrit, endCrit, minGap;
+public:
+    void checkNode(int index, int lastIndex, int prev, ListNode* node) {
+        if (node == NULL || node->next == NULL) return;
+        if (node->val > prev && node->val > node->next->val) {
+            if (lastIndex != -1)
+                minGap = min(minGap, index-lastIndex);
+            if (startCrit == -1)
+                startCrit = index;
+            else
+                endCrit = index;
+            lastIndex = index;
+        } else if (node->val < prev && node->val < node->next->val) {
+            if (lastIndex != -1)
+                minGap = min(minGap, index-lastIndex);
+            if (startCrit == -1)
+                startCrit = index;
+            else
+                endCrit = index;
+            lastIndex = index;
+        }
+        checkNode(index+1, lastIndex, node->val, node->next);
+    }
+    vector<int> nodesBetweenCriticalPoints(ListNode* head) {
+        startCrit = endCrit = -1;
+        minGap = INT_MAX;
+        if (head == NULL) return {-1, -1};
+
+        checkNode(0, -1, head->val, head->next);
+        if (endCrit == -1 || startCrit == -1) return {-1, -1};
+
+        return {minGap, endCrit - startCrit};
+    }
+};
+
+// 05 July, 2024
