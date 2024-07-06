@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int passThePillow(int n, int time) {
+        int quot = time / (n-1);
+        time = time % (n-1);
+        if (quot % 2 == 0) {
+            return time+1;
+        } else {
+            return n-time;
+        }
+    }
+};
+
+// 06 July, 2024
