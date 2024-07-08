@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        vector<int> arr(n);
+        for (int i=1; i<=n; i++) {
+            arr[i-1] = i;
+        }
+        int curIndex = (k-1)%n;
+        while (arr.size() > 1) {
+            arr.erase(arr.begin()+curIndex);
+            curIndex = (curIndex+k-1)%arr.size();
+        }
+        return arr[0];
+    }
+};
+
+// 08 July, 2024
