@@ -1,0 +1,21 @@
+class Solution {
+public:
+    double averageWaitingTime(vector<vector<int>>& customers) {
+        double totalWaitingTime=0, totalCustomers=customers.size();
+        int arrival, time, curIdle=0, curWaitingTime;
+        for (auto customer: customers) {
+            arrival = customer[0];
+            time = customer[1];
+            if (arrival >= curIdle) {
+                curWaitingTime = time;
+            } else {
+                curWaitingTime = (curIdle - arrival + time);
+            }
+            curIdle = arrival + curWaitingTime;
+            totalWaitingTime += curWaitingTime;
+        }
+        return totalWaitingTime / totalCustomers;
+    }
+};
+
+// 09 July, 2024
