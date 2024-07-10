@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int minOperations(vector<string>& logs) {
+        int curLevel = 0;
+        for (auto log: logs) {
+            if (log == "../") {
+                curLevel = max(0, curLevel-1);
+            } else if (log != "./") {
+                curLevel++;
+            }
+        }
+        return curLevel;
+    }
+};
+
+// 10 July, 2024
