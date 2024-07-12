@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int maximumGain(string s, int x, int y) {
+        char first = x>y ? 'a' : 'b';
+        char second = x>y ? 'b' : 'a';
+        int highScore = max(x, y);
+        int lowScore = min(x, y);
+        stack<char> st, st2;
+        int gain = 0;
+        for (int i=0; i<s.length(); i++) {
+            if (!st.empty() && s[i] == second && st.top() == first) {
+                st.pop();
+                gain += highScore;
+            }
+            else {
+                st.push(s[i]);
+            }
+        }
+        
+        while (!st.empty()) {
+            if (!st2.empty() && st2.top() == first && st.top() == second) {
+                gain += lowScore;
+                st.pop();
+                st2.pop();
+                continue;
+            }
+            st2.push(st.top());
+            st.pop();
+            continue;
+        }
+        return gain;
+    }
+};
