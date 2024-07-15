@@ -1,0 +1,28 @@
+class Solution {
+public:
+    TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {
+        map<int, TreeNode*> m;
+        map<int, bool> haveParent;
+        for (auto el: descriptions) {
+            if (m.find(el[0]) == m.end()) {
+                m[el[0]] = new TreeNode(el[0]);
+            }
+            if (m.find(el[1]) == m.end()) {
+                m[el[1]] = new TreeNode(el[1]);
+            }
+            if (el[2] == 1) {
+                m[el[0]]->left = m[el[1]];
+            } else {
+                m[el[0]]->right = m[el[1]];
+            }
+            haveParent[el[1]] = true;
+        }
+        for (auto el: m) {
+            if (haveParent[el.first]) continue;
+            return el.second;
+        }
+        return NULL;
+    }
+};
+
+// 15 July, 2024
