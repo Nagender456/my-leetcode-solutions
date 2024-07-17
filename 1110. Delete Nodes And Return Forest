@@ -1,0 +1,40 @@
+class Solution {
+public:
+    void traverse(TreeNode* root, unordered_set<int> del, vector<TreeNode*> &res, bool parent_deleted, TreeNode* parent) {
+        int val = root->val;
+        if(root == NULL)
+            return;
+        if(del.count(val) > 0) {
+            if(parent != NULL && del.find(parent->val) == 0) {
+                if(parent->left == root) {
+                    parent->left = NULL;
+                } else if(parent->right == root) {
+                    parent->right = NULL;
+                }
+            }
+            parent_deleted = true;
+        } else {
+            if(parent_deleted) {
+                res.push_back(root);
+            }
+            parent_deleted = false;
+        } 
+        if(root->left != NULL)
+            traverse(root->left, del, res, parent_deleted, root);
+        if(root->right != NULL)
+            traverse(root->right, del, res, parent_deleted, root);
+    }
+
+    vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
+        vector<TreeNode*> res;
+        unordered_set<int> del;
+        for(int i = 0;i<to_delete.size();i++) {
+            del.insert(to_delete[i]);
+        }
+        bool parent_deleted = true;
+        traverse(root, del, res, parent_deleted, NULL);
+        return res;
+    }
+};
+
+// 17 July, 2024
